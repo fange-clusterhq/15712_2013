@@ -1,0 +1,171 @@
+siw_cq.c:		list_add_tail(&wqe->list, &cq->queue);
+siw.h:	list_move_tail(&wqe->list, &qp->orq);
+siw_obj.c:		list_del(&wqe->list);
+siw_obj.c:	struct siw_qp *qp = wqe->qp;
+siw_obj.c:			siw_unref_mem_sgl(wqe->wr.sgl.sge,
+siw_obj.c:					  wqe->wr.sgl.num_sge);
+siw_obj.c:		siw_unref_mem_sgl(wqe->wr.sgl.sge, wqe->wr.sgl.num_sge);
+siw_obj.c:		siw_unref_mem_sgl(wqe->wr.sgl.sge, 1);
+siw_obj.c:		wqe->wr.sgl.sge[0].mem.obj = NULL;
+siw_obj.h:	INIT_LIST_HEAD(&wqe->list);
+siw_obj.h:	list_add(&wqe->list, wq);
+siw_obj.h:		list_del(&wqe->list);
+siw_qp.c:		INIT_LIST_HEAD(&wqe->list);
+siw_qp.c:		list_add(&wqe->list, &qp->freeq);
+siw_qp.c:			list_del(&wqe->list);
+siw_qp.c:			list_add_tail(&wqe->list, &qp->orq);
+siw_qp.c:				QP_ID(qp), wqe, wqe->wr_status);
+siw_qp.c:			list_del(&wqe->list);
+siw_qp.c:				wqe->wr_status);
+siw_qp.c:			if (wqe->wr_status != SR_WR_DONE) {
+siw_qp.c:				wqe->wc_status = IB_WC_WR_FLUSH_ERR;
+siw_qp.c:				wqe->wr_status = SR_WR_DONE;
+siw_qp.c:				list_move_tail(&wqe->list, &cq->queue);
+siw_qp.c:				list_del(&wqe->list);
+siw_qp.c:				wqe->wc_status = IB_WC_WR_FLUSH_ERR;
+siw_qp.c:				wqe->wr_status = SR_WR_DONE;
+siw_qp.c:				list_move_tail(&wqe->list, &cq->queue);
+siw_qp.c:				list_del(&wqe->list);
+siw_qp.c: * processed (wqe->processed).
+siw_qp.c:		list_del_init(&wqe->list);
+siw_qp.c:			wqe->wc_status = IB_WC_WR_FLUSH_ERR;
+siw_qp.c:			list_add_tail(&wqe->list, &cq->queue);
+siw_qp_rx.c:		rctx->ddp_stag = wqe->wr.rread.sge[0].lkey;
+siw_qp_rx.c:		rctx->ddp_to   = wqe->wr.rread.sge[0].addr;
+siw_qp_rx.c:	if (!rctx->more_ddp_segs && (wqe->processed + rctx->fpdu_part_rem
+siw_qp_rx.c:				     != wqe->bytes)) {
+siw_qp_rx.c:			wqe->processed + rctx->fpdu_part_rem, wqe->bytes);
+siw_qp_rx.c:	if (ddp_mo != wqe->processed) {
+siw_qp_rx.c:			ddp_mo, wqe->processed);
+siw_qp_rx.c:	if (wqe->bytes < wqe->processed + rctx->fpdu_part_rem) {
+siw_qp_rx.c:			wqe->bytes - wqe->processed, rctx->fpdu_part_rem);
+siw_qp_rx.c:		wqe->wc_status = IB_WC_LOC_LEN_ERR;
+siw_qp_rx.c:		list_del_init(&wqe->list);
+siw_qp_rx.c:			list_del_init(&wqe->list);
+siw_qp_rx.c:			wqe->qp = qp;
+siw_qp_rx.c:		wqe->wr_status = SR_WR_INPROGRESS;
+siw_qp_rx.c:		sge = &wqe->wr.sgl.sge[rctx->sge_idx];
+siw_qp_rx.c:			wqe->processed += rcvd_bytes;
+siw_qp_rx.c:	wqe->processed += rcvd_bytes;
+siw_qp_rx.c:			INIT_LIST_HEAD(&wqe->list);
+siw_qp_rx.c:			wqe->processed = 0;
+siw_qp_rx.c:			wqe->qp = qp;
+siw_qp_rx.c:			list_del_init(&wqe->list);
+siw_qp_rx.c:		if (wr_type(wqe) != SIW_WR_RDMA_READ_REQ || wqe->processed) {
+siw_qp_rx.c:			WARN_ON(wqe->processed);
+siw_qp_rx.c:		wqe->wr_status = SR_WR_INPROGRESS;
+siw_qp_rx.c:	sge = wqe->wr.rread.sge; /* there is only one */
+siw_qp_rx.c:	rv = siw_check_sge(qp->pd, sge, SR_MEM_LWRITE, wqe->processed, bytes);
+siw_qp_rx.c:		wqe->wc_status = IB_WC_LOC_PROT_ERR;
+siw_qp_rx.c:		int is_last = (bytes + wqe->processed == wqe->bytes) ? 1 : 0;
+siw_qp_rx.c:				wqe->wc_status = IB_WC_LOC_PROT_ERR;
+siw_qp_rx.c:				(void *)(sge->addr + wqe->processed));
+siw_qp_rx.c:		wqe->wc_status = IB_WC_GENERAL_ERR;
+siw_qp_rx.c:	wqe->processed += rv;
+siw_qp_rx.c:	struct siw_qp		*qp = wqe->qp;
+siw_qp_rx.c:		list_add(&wqe->list, &c_list);
+siw_qp_rx.c:			list_del_init(&wqe->list);
+siw_qp_rx.c:				list_add_tail(&wqe->list, &qp->orq);
+siw_qp_rx.c:		wqe->wc_status = IB_WC_SUCCESS;
+siw_qp_rx.c:		wqe->wr_status = SR_WR_DONE;
+siw_qp_rx.c:		wqe->wc_status = IB_WC_SUCCESS;
+siw_qp_rx.c:		wqe->wr_status = SR_WR_DONE;
+siw_qp_rx.c:		if (!wqe->wc_status)
+siw_qp_rx.c:			wqe->wc_status = IB_WC_GENERAL_ERR;
+siw_qp_rx.c:		wqe->wr_status = SR_WR_DONE;
+siw_qp_rx.c:				wqe->wc_status = status;
+siw_qp_rx.c:				wqe->wc_status = IB_WC_GENERAL_ERR;
+siw_qp_rx.c:			wqe->wr_status = SR_WR_DONE;
+siw_qp_tx.c:		c_tx->pkt.rreq.sink_stag = htonl(wqe->wr.rread.sge[0].lkey);
+siw_qp_tx.c:			cpu_to_be64(wqe->wr.rread.sge[0].addr); /* abs addr! */
+siw_qp_tx.c:		c_tx->pkt.rreq.source_stag = htonl(wqe->wr.rread.rtag);
+siw_qp_tx.c:		c_tx->pkt.rreq.source_to = cpu_to_be64(wqe->wr.rread.raddr);
+siw_qp_tx.c:		c_tx->pkt.rreq.read_size = htonl(wqe->bytes);
+siw_qp_tx.c:			wqe->wr.rread.sge[0].lkey, wqe->wr.rread.sge[0].addr);
+siw_qp_tx.c:		if (!wqe->bytes)
+siw_qp_tx.c:		c_tx->pkt.rwrite.sink_stag = htonl(wqe->wr.write.rtag);
+siw_qp_tx.c:		c_tx->pkt.rwrite.sink_to = cpu_to_be64(wqe->wr.write.raddr);
+siw_qp_tx.c:		if (!wqe->bytes)
+siw_qp_tx.c:		c_tx->pkt.rresp.sink_stag = cpu_to_be32(wqe->wr.rresp.rtag);
+siw_qp_tx.c:		c_tx->pkt.rresp.sink_to = cpu_to_be64(wqe->wr.rresp.raddr);
+siw_qp_tx.c:			wqe->wr.rresp.rtag, wqe->wr.rresp.raddr);
+siw_qp_tx.c:		if (!wqe->bytes)
+siw_qp_tx.c:	    && wqe->bytes > SENDPAGE_THRESH
+siw_qp_tx.c:	struct siw_sge		*sge = &wqe->wr.sgl.sge[c_tx->sge_idx],
+siw_qp_tx.c:	wqe->processed += data_len;
+siw_qp_tx.c:				wqe->processed -= c_tx->bytes_unsent;
+siw_qp_tx.c:		    (data_len != 0 || wqe->processed < wqe->bytes)) {
+siw_qp_tx.c:		wqe->processed -= data_len;
+siw_qp_tx.c:		if (data_len > 0 && wqe->processed < wqe->bytes)
+siw_qp_tx.c:		wqe->processed -= data_len - rv;
+siw_qp_tx.c:			sge = &wqe->wr.sgl.sge[c_tx->sge_idx];
+siw_qp_tx.c:					sge = &wqe->wr.sgl.sge[c_tx->sge_idx];
+siw_qp_tx.c:		c_tx->pkt.c_untagged.ddp_mo = cpu_to_be32(wqe->processed);
+siw_qp_tx.c:			    cpu_to_be64(wqe->wr.rresp.raddr + wqe->processed);
+siw_qp_tx.c:			    cpu_to_be64(wqe->wr.write.raddr + wqe->processed);
+siw_qp_tx.c:	c_tx->bytes_unsent = wqe->bytes - wqe->processed;
+siw_qp_tx.c:		struct siw_sge	*sge = &wqe->wr.sgl.sge[c_tx->sge_idx];
+siw_qp_tx.c:		BUG_ON(c_tx->sge_idx > wqe->wr.sgl.num_sge - 1);
+siw_qp_tx.c:	if (wqe->wr_status == SR_WR_QUEUED) {
+siw_qp_tx.c:		wqe->wr_status = SR_WR_INPROGRESS;
+siw_qp_tx.c:			wqe->processed = wqe->bytes;
+siw_qp_tx.c:		list_add_tail(&wqe->list, &c_list);
+siw_qp_tx.c:		list_add_tail(&wqe->list, &qp->orq);
+siw_qp_tx.c:		QP_ID(qp), wr_type(wqe), wqe->wr_status, wqe->bytes,
+siw_qp_tx.c:		wqe->processed, (unsigned long long)wr_id(wqe));
+siw_qp_tx.c:			wqe->wc_status = IB_WC_SUCCESS;
+siw_qp_tx.c:			wqe->wr_status = SR_WR_DONE;
+siw_qp_tx.c:			wqe->wr_status = SR_WR_DONE;
+siw_qp_tx.c:			list_del_init(&wqe->list);
+siw_qp_tx.c:				list_del_init(&wqe->list);
+siw_qp_tx.c:			wqe->wr_status = SR_WR_DONE;
+siw_qp_tx.c:			wqe->wc_status = IB_WC_LOC_QP_OP_ERR;
+siw_qp_tx.c:			wqe->error = rv;
+siw_verbs.c:		while (num_wqe--) {
+siw_verbs.c:			INIT_LIST_HEAD(&wqe->list);
+siw_verbs.c:			list_add(&wqe->list, &qp->freeq);
+siw_verbs.c:	char		*kbuf	 = wqe->wr.inlined_data.data;
+siw_verbs.c:	wqe->wr.inlined_data.sge.mem.buf = NULL;
+siw_verbs.c:	wqe->wr.inlined_data.sge.addr = (u64)kbuf;
+siw_verbs.c:	wqe->wr.inlined_data.sge.lkey = 0;
+siw_verbs.c:		if (wqe->qp->attrs.flags & SIW_KERNEL_VERBS)
+siw_verbs.c:	wqe->wr.inlined_data.sge.len = bytes > 0 ? bytes : 0;
+siw_verbs.c:	wqe->wr.inlined_data.num_sge = bytes > 0 ? 1 : 0;
+siw_verbs.c:	dprint(DBG_WR, "(QP%d): Copied inline data: %d\n", QP_ID(wqe->qp),
+siw_verbs.c:		INIT_LIST_HEAD(&wqe->list);
+siw_verbs.c:		wqe->processed = 0;
+siw_verbs.c:		wqe->wr.sgl.num_sge = 0;
+siw_verbs.c:		wqe->qp = qp;
+siw_verbs.c:						  wqe->wr.send.sge,
+siw_verbs.c:				wqe->wr.send.num_sge = wr->num_sge;
+siw_verbs.c:			wqe->bytes = rv;
+siw_verbs.c:			rv = siw_copy_sgl(wr->sg_list, wqe->wr.rread.sge, 1);
+siw_verbs.c:			wqe->wr.rread.raddr = wr->wr.rdma.remote_addr;
+siw_verbs.c:			wqe->wr.rread.rtag = wr->wr.rdma.rkey;
+siw_verbs.c:			wqe->wr.rread.num_sge = 1;
+siw_verbs.c:			wqe->bytes = rv;
+siw_verbs.c:						  wqe->wr.send.sge,
+siw_verbs.c:				wqe->wr.write.num_sge = wr->num_sge;
+siw_verbs.c:			wqe->wr.write.raddr = wr->wr.rdma.remote_addr;
+siw_verbs.c:			wqe->wr.write.rtag = wr->wr.rdma.rkey;
+siw_verbs.c:			wqe->bytes = rv;
+siw_verbs.c:			wqe->wr.sgl.num_sge = 0;
+siw_verbs.c:				QP_ID(qp), wr_type(wqe), wqe->bytes,
+siw_verbs.c:		wqe->wr_status = SR_WR_QUEUED;
+siw_verbs.c:		list_add_tail(&wqe->list, &qp->sq);
+siw_verbs.c:		rv = siw_copy_sgl(wr->sg_list, wqe->wr.recv.sge, wr->num_sge);
+siw_verbs.c:		wqe->wr.recv.num_sge = wr->num_sge;
+siw_verbs.c:		wqe->bytes = rv;
+siw_verbs.c:		wqe->wr_status = SR_WR_QUEUED;
+siw_verbs.c:		list_add_tail(&wqe->list, &qp->rq);
+siw_verbs.c:		while (num_wqe--) {
+siw_verbs.c:			INIT_LIST_HEAD(&wqe->list);
+siw_verbs.c:			list_add(&wqe->list, &srq->freeq);
+siw_verbs.c:			list_del(&wqe->list);
+siw_verbs.c:		INIT_LIST_HEAD(&wqe->list);
+siw_verbs.c:		wqe->processed = 0;
+siw_verbs.c:		wqe->wr_status = SR_WR_QUEUED;
+siw_verbs.c:		rv = siw_copy_sgl(wr->sg_list, wqe->wr.recv.sge, wr->num_sge);
+siw_verbs.c:		wqe->wr.recv.num_sge = wr->num_sge;
+siw_verbs.c:		wqe->bytes = rv;
+siw_verbs.c:		list_add_tail(&wqe->list, &srq->rq);
