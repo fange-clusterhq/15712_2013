@@ -1,5 +1,4 @@
-%\documentclass[a4paper, 12pt, notitlepage]{report}
-\documentclass[oneside, 12pt]{article}
+\documentclass[a4paper, oneside, 12pt]{article}
 
 \usepackage{amsfonts} % if you want blackboard bold symbols e.g. for real numbers
 \usepackage{graphicx} % if you want to include jpeg or pdf pictures
@@ -27,9 +26,61 @@ The Intelligent RDMA, when presented in plain English, is pretty simple.\\
 
 %%%%%%%%%% MAIN TEXT STARTS HERE %%%%%%%%%%
 
-%%%%%%%%%% SAMPLE CHAPTER %%%%%%%%%%
 \section{Introduction}
+Remote Direct Memory Access(RDMA) is a protocol that allows low latency data
+sharing across machines connected by a network. Unlike RPC systems, RDMA does
+not require control flow transfer by context switches, thereby decreasing both
+latency and CPU utilization at the end hosts. Ideally, network adapters
+directly link and transfer data between the endpoints' physical memory.
+Therefore, there is no copying of data from userspace to kernelspace, further
+lowering the latency associated with and data copy.
+
+Since there is no transfer of control flow, the client machine (a host that
+reads data from a serevr) must perform all operation on the shared memory
+locally. However, operations such as B-tree and linked list traversal, will
+require memory access with low locality. As a result, the local machine might
+require multiple round-trip times before obtaining its desired data. RPCs do
+not suffer from this problem since the server performs this lookup locally and
+then transfers the result back to the client. In this scenario, RTTs can easily
+dominate the operation cost, nullifying any benefits RDMA gives us.
+
+As a result, we propose an intelligent RDMA that takes into consideration this
+indirect memory access use case. Our goal is to minimize the number of RTTs
+required to traverse these data structures while maintaining the low context
+switching benefits of RDMA. In section 2, we discuss our hypothesis on how to
+achieve our goals. In section 3, we present our evaluation methods. In section
+4, we outline our schedule and tentative work division. In section 5, we
+present our 75\%, 100\%, and 125\% deliverables by the end of this projects.
+Finally, in section 6, we will provide the basic outline of our final paper.
+
+\section{Problem with RDMA}
+Currently, RDMA only supports basic operations such as RDMA-read and
+RDMA-write.  These two operations are great for
 \section{Design}
+\subsection{Pointer Dereferencing}
+Current RDMA operations allow a client to read a contiguous block of registered
+virtual memory at the server. This requires no involvement of the server CPU -
+the NIC maintains virtual to physical address mappings for registered memory
+regions. With a little more hardware support, the NIC can examine the block
+being transferred and use a word at an offset as a pointer to another block.\\
+
+Consider, for example, the hashtable implementation in \cite{pilaf}. In Pilaf,
+reading a value for a key requires at least 2 RTTs - one to fetch the hash
+table entry and the other to fetch the extents for that entry. Our approach can
+reduce the latency to one RTT as follows. As the client knows the layout of the
+hashtable entry, it instructs the server to dereference the entry at a known
+offset, and return the memory chunk at the new address.\\
+
+There are several challenges in implementing this idea. The first is data races
+encountered when
+multiple clients access the same data structure at the server. We propose to
+solve this problem by using the techniques introduced in \cite{pilaf}. We only
+wish to perform read access via RDMA where validity of the data is verified by
+the client. For this to work, the exposed data structures need to be converted
+into self verifying data structures.\\
+
+\subsection{Conditional Pointer Deferencing}
+\subsection{Scatter Gather}
 \section{Implementation}
 \section{Results}
 \section{Evaluation}
@@ -44,5 +95,9 @@ The Intelligent RDMA, when presented in plain English, is pretty simple.\\
 \item Author, I. (Year). \emph{Book Title}, Publisher; Place of publication.
 
 \end{description}
+
+
+\bibliographystyle{plain}
+\bibliography{references}
 
 \end{document}
